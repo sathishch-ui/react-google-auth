@@ -12,8 +12,8 @@ function App() {
         <span>
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              const decoded = jwtDecode(credentialResponse);
-              console.log(decoded);
+              // const decoded = jwtDecode(credentialResponse);
+              console.log(credentialResponse);
             }}
             onError={() => {
               console.log("Login Failed");
