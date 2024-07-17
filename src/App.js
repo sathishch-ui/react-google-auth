@@ -1,28 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import GoogleAuthComponent from "./components/GoogleAuth";
+import Dashboard from "./components/DashBoard";
 
-function App() {
+import './App.css'
+
+const App = () => {
+  const [token, setToken] = useState('');
+  
+    useEffect(() => {
+      const storedToken = localStorage.getItem("localStorageToken");
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Google Auth Integration</p>
-        <span>
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              // const decoded = jwtDecode(credentialResponse);
-              console.log(credentialResponse);
-            }}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          />
-        </span>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<GoogleAuthComponent setToken={setToken} />} />
+        <Route path="/dashboard" element={<Dashboard token={token} />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
